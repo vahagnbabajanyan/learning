@@ -1,0 +1,26 @@
+#include <vector>
+
+#include "sorting.hpp"
+
+namespace sorting
+{
+        void selection_sort(std::vector<int>& vec)
+        {
+                int size = vec.size();
+                for (int i = 0; i < size - 1; ++i) {
+                        int min = i;
+                        for (int j = i + 1; j < size; ++j) {
+                                if (vec[min] > vec[j]) {
+                                        min = j;
+                                }
+                        }
+                        if (i != min) {
+                                int tmp = vec[min];
+                                vec[min] = vec[i];
+                                vec[i] = tmp;
+                        }
+                }
+        }
+
+} // end of namespace sorting
+

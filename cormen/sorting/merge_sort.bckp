@@ -1,0 +1,47 @@
+#include <vector>
+#include <cassert>
+#include <algorithm>
+#include <limits>
+
+#include "utilities.hpp"
+
+namespace sorting
+{
+        void merge(std::vector<int>& vec, int p, int q, int r)
+        {
+                int size = vec.size();
+                assert(q < r && p <= q);
+                assert(r < size);
+                int n1 = q - p + 1;
+                int n2 = r - q;
+                std::vector<int> left(n1 + 1);
+                std::vector<int> right(n2 + 1);
+                std::copy(vec.begin() + p, vec.begin() + q + 1, left.begin());
+                std::copy(vec.begin() + q + 1, vec.begin() + r + 1, right.begin());
+                left.push_back(std::numeric_limits<int>::max());
+                right.push_back(std::numeric_limits<int>::max());
+                int k = 0;
+                int m = 0;
+                for (int i = p; i <= r; ++i) {
+                        if (left[k] <= right[m]) {
+                                vec[i] = left[k];
+                                ++k;
+                        } else {
+                                vec[i] = right[m];
+                                ++m;
+                        }
+                }
+        }
+
+        void merge_sort(std::vector<int>& vec, int p, int r)
+        {
+                if (p < r) {
+                        int q = (p + r) / 2;
+                        merge_sort(vec, p, q);
+                        merge_sort(vec, q + 1, r);
+                        merge(vec, p, q, r);
+                }
+        }
+
+} // end of namespace sorting
+
