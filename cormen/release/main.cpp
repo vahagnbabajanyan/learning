@@ -10,7 +10,7 @@
 
 int main()
 {
-        std::vector<int> vec;
+/*        std::vector<int> vec;
         utilities::rand_init_vec(vec);
         utilities::print_full_vec(vec);
 
@@ -31,6 +31,20 @@ int main()
                 }
                 std::cout << "do you want to contonue y/n : ";
                 std::cin >> c;
-        }
+        }*/
+        std::vector<int> vec;
+        vec.push_back(1);
+        vec.push_back(2);
+        vec.push_back(3);
+        vec.push_back(9);
+        vec.push_back(10);
+        vec.push_back(4);
+        vec.push_back(5);
+        vec.push_back(6);
+        vec.push_back(7);
+        vec.push_back(8);
+        utilities::print_full_vec(vec);
+
+        std::cout << "the number of inversions: " << utilities::count_inversions(vec) << std::endl;
 
 }

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <limits>
 
+#include "sorting.hpp"
 #include "utilities.hpp"
 
 namespace sorting

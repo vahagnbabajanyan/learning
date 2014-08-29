@@ -17,7 +17,6 @@
 
 namespace utilities
 {
-
         class my_exception : public std::exception
         {
         public:
@@ -101,6 +100,12 @@ namespace utilities
         int binary_to_num(const std::vector<bool>& bin);
 
         void align_binaries(std::vector<bool>& v1, std::vector<bool>& v2);
+
+        void merge_count_inversions(std::vector<int>&, int, int, int, int&);
+
+        void merge_sort_count_inversions(std::vector<int>&, int, int, int&);
+
+        int count_inversions(const std::vector<int>& vec);
 
 } // end of namespace utilities
 

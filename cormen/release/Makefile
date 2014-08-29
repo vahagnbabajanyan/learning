@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-c -Wall
-BASEDIR=/home/vahagnbabajanyan/Projects/improov
+BASEDIR=/home/vahagnbabajanyan/Projects/learning
 UTILDIR=$(BASEDIR)/cormen/utilities
 SORTDIR=$(BASEDIR)/cormen/sorting
 INC=-I$(BASEDIR)/cormen/utilities \
@@ -19,17 +19,17 @@ main.o: main.cpp
 insertion_sort.o: $(SORTDIR)/insertion_sort.cpp
 	$(CC) $(INC) $(CFLAGS) $(SORTDIR)/insertion_sort.cpp 
 
-recursive_insertion_sort.o: $(SORTDIR)/recursive_insertion_sort.cpp
-	$(CC) $(INC) $(CFLAGS) $(SORTDIR)/recursive_insertion_sort.cpp 
-
 selection_sort.o: $(SORTDIR)/selection_sort.cpp
 	$(CC) $(INC) $(CFLAGS) $(SORTDIR)/selection_sort.cpp 
 
 merge_sort.o: $(SORTDIR)/merge_sort.cpp
 	$(CC) $(INC) $(CFLAGS) $(SORTDIR)/merge_sort.cpp
 
+recursive_insertion_sort.o: $(SORTDIR)/recursive_insertion_sort.cpp
+	$(CC) $(INC) $(CFLAGS) $(SORTDIR)/recursive_insertion_sort.cpp 
+
 sort_lib.a : insertion_sort.o recursive_insertion_sort.o selection_sort.o merge_sort.o
-	ar cr sort_lib.a selection_sort.o insertion_sort.o recursive_insertion_sort.o merge_sort.o
+	ar cr sort_lib.a insertion_sort.o selection_sort.o merge_sort.o recursive_insertion_sort.o
 
 utilities.o: $(UTILDIR)/utilities.cpp
 	$(CC) $(INC) $(CFLAGS) $(UTILDIR)/utilities.cpp
