@@ -6,20 +6,25 @@
 #include <QToolBar>
 #include <QDialog>
 #include <QString>
+#include <QLayout>
 
 #include "dmainwindow.hpp"
+#include "user_gui.hpp"
+#include "user.hpp"
 
 namespace gui
 {
 
 dMainWindow::dMainWindow()
+        : _loginUser(new loginUser)
 {
-        _dictionary_window = new QDialog;
-        setCentralWidget(_dictionary_window);
+        setCentralWidget(_loginUser);
 
         createActions();
         createMenus();
         createToolBars();
+        _userMenu = 0;
+        setLayout(layout);
 }
 
 QAction*
@@ -116,5 +121,13 @@ void dMainWindow::deleteFile()
 {}
 void dMainWindow::openInsertDialog()
 {}
+
+void dMainWindow::logUser(const std::string& user)
+{
+        std::cout << user << std::endl;
+        userInfo info = _loginUser->getUserInfo();
+        _userMenu = new userMenu(info._name);
+        
+}
 
 } // end of namespace gui

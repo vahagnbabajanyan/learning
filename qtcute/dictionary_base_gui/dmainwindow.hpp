@@ -5,6 +5,8 @@
 #include <QKeySequence>
 
 #include <string>
+
+#include "user_gui.hpp"
 // #include "dictionay_window.hpp" instead used below QDialog
 
 class QAction;
@@ -37,8 +39,10 @@ private slots:
         void openMergeDialog();
         void deleteFile();
         void openInsertDialog();
+        void logUser(const std::string& user);
 
 private:
+        void setCentralWidget(QWidget* widget);
         void createActions();
         QAction* createAction(const std::string&, QKeySequence, const std::string&);
         void createMenus();
@@ -46,7 +50,8 @@ private:
 
 private:
         // shoud be user defined type dictionary_window
-        QDialog *_dictionary_window;
+        loginUser *_loginUser;
+        userMenu *_userMenu;
         QDialog *_exportDialog;
         QDialog *_importDialog;
         QDialog *_mergeDialog;
