@@ -42,7 +42,6 @@ private slots:
         void logUser(const std::string& user);
 
 private:
-        void setCentralWidget(QWidget* widget);
         void createActions();
         QAction* createAction(const std::string&, QKeySequence, const std::string&);
         void createMenus();

@@ -2,9 +2,12 @@
 #define _USER_GUI_HPP_
 
 #include <QWidget>
+#include <QTableWidget>
+#include <QSpacerItem>
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "user.hpp"
 
@@ -47,19 +50,28 @@ class userMenu : public QWidget
 public:
         userMenu(const std::string& user, QWidget* w = 0);
 private slots:
-
+        void showDictionaryList();
+        void showStatistics();
+        void showSettings();
+        void showTests();
 private:
 
 private:
+        QWidget *_mainWidget;
+        std::list<QWidget*> _widgets;
         QPushButton *_userStatisticsButton;
         QPushButton *_userDictionariesButton;
         QPushButton *_userTestsButton;
         QPushButton *_userSettingsButton;
+
         QWidget *_userStats;
-        QWidget *_userDicts;
-        QWidget *_userTests;
+        QTableWidget *_userDicts;
+        QTableWidget *_userTests;
         QWidget *_userSetts;
 
+        QWidget *_visibleWidget;
+
+        QSpacerItem *_spacer;
 };
 
 } // end of namespace gui

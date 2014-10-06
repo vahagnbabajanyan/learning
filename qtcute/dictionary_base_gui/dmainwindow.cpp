@@ -7,6 +7,8 @@
 #include <QDialog>
 #include <QString>
 #include <QLayout>
+#include <QTableWidget>
+
 
 #include "dmainwindow.hpp"
 #include "user_gui.hpp"
@@ -18,13 +20,17 @@ namespace gui
 dMainWindow::dMainWindow()
         : _loginUser(new loginUser)
 {
-        setCentralWidget(_loginUser);
-
+        connect(_loginUser, SIGNAL(loggedIn(const std::string&)), this, SLOT(logUser(const std::string&)));
+        QWidget* centralWidget = new QWidget;
+        centralWidget->setFixedSize(250, 300);
+        setCentralWidget(centralWidget);
         createActions();
         createMenus();
         createToolBars();
         _userMenu = 0;
-        setLayout(layout);
+        QHBoxLayout *layout = new QHBoxLayout;
+        layout->addWidget(_loginUser);
+        this->centralWidget()->setLayout(layout);
 }
 
 QAction*
@@ -124,10 +130,22 @@ void dMainWindow::openInsertDialog()
 
 void dMainWindow::logUser(const std::string& user)
 {
-        std::cout << user << std::endl;
+        std::cout << "LOG USER" << std::endl;
         userInfo info = _loginUser->getUserInfo();
         _userMenu = new userMenu(info._name);
-        
+        QVBoxLayout* leftLayout = new QVBoxLayout;
+        leftLayout->addWidget(_userMenu);
+        QHBoxLayout* mainLayout = new QHBoxLayout;
+        mainLayout->addLayout(leftLayout);
+        QTableWidget *table = new QTableWidget;
+        QVBoxLayout* rightLayout = new QVBoxLayout;
+        rightLayout->addWidget(table);
+        mainLayout->addLayout(rightLayout);
+        centralWidget()->layout()->removeWidget(_loginUser);
+        delete _loginUser;
+        delete centralWidget()->layout();
+        update();
+        centralWidget()->setLayout(mainLayout);
 }
 
 } // end of namespace gui
