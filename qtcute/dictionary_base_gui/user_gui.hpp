@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QTableWidget>
 #include <QSpacerItem>
+#include <QVBoxLayout>
 
 #include <iostream>
 #include <string>
@@ -54,7 +55,32 @@ private slots:
         void showStatistics();
         void showSettings();
         void showTests();
+
 private:
+        void createButtons();
+        void setConnections();
+        void setMenuLayout(QLabel*, QVBoxLayout*&);
+
+        template <typename W>
+        void showHideWidget(W*& w, QPushButton* button)
+        {
+                if (0 != _visibleWidget) {
+                        _visibleWidget->hide();
+                        _mainWidget->layout()->removeWidget(_visibleWidget);
+                }
+                if (0 == _visibleWidget || w != _visibleWidget) {
+                        w = new W;
+                        w->setFixedSize(100, 180);
+                        std::list<QWidget*>::iterator it = std::find(_widgets.begin(), _widgets.end(), button);
+                        int indx = std::distance(_widgets.begin(), it) + 2;
+                        static_cast<QHBoxLayout*>(_mainWidget->layout())->insertWidget(indx, w);
+                        _visibleWidget = w;
+                        _spacer->changeSize(5, 50);
+                        return;
+                }
+                _visibleWidget = 0;
+                _spacer->changeSize(5, 250);
+        }
 
 private:
         QWidget *_mainWidget;

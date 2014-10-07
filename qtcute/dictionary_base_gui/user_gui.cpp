@@ -103,39 +103,78 @@ loginUser::createNewUser()
 userMenu::userMenu(const std::string& user, QWidget* w)
         : QWidget(w), _visibleWidget(0)
 {
+        createButtons();
+        setConnections();
+        _spacer = new QSpacerItem(5, 250);
+        QVBoxLayout *menuLayout = new QVBoxLayout;
         QLabel *userLabel = new QLabel(tr(user.c_str()));
-        // creating buttons
-        _userStatisticsButton = new QPushButton(tr("Statistics"));
-        connect(_userStatisticsButton, SIGNAL(clicked()), this, SLOT(showStatistics()));
-        _widgets.push_back(_userStatisticsButton);
-        _userDictionariesButton = new QPushButton(tr("Dictionaries"));
-        connect(_userDictionariesButton, SIGNAL(clicked()), this, SLOT(showDictionaryList()));
-        _widgets.push_back(_userDictionariesButton);
-        _userTestsButton = new QPushButton(tr("Tests"));
-        connect(_userTestsButton, SIGNAL(clicked()), this, SLOT(showTests()));
-        _widgets.push_back(_userTestsButton);
-        _userSettingsButton = new QPushButton(tr("Settings"));
-        connect(_userSettingsButton, SIGNAL(clicked()), this, SLOT(showSettings()));
-        _widgets.push_back(_userSettingsButton);
-
-        // create mainWidget
+        setMenuLayout(userLabel, menuLayout);
         _mainWidget = new QWidget;
         _mainWidget->setFixedSize(110, 400);
-
-        QVBoxLayout *menuLayout = new QVBoxLayout;
-        menuLayout->addWidget(userLabel, 0, 0);
-        menuLayout->addWidget(_userStatisticsButton, 1, 0);
-        menuLayout->addWidget(_userDictionariesButton, 2, 0);
-        menuLayout->addWidget(_userTestsButton, 3, 0);
-        menuLayout->addWidget(_userSettingsButton, 4, 0);
-        _spacer = new QSpacerItem(5, 250);
-        menuLayout->addItem(_spacer);
         _mainWidget->setLayout(menuLayout);
         QHBoxLayout *mainLayout = new QHBoxLayout;
         mainLayout->addWidget(_mainWidget);
         setLayout(mainLayout);
 }
 
+void
+userMenu::createButtons()
+{
+        _userStatisticsButton = new QPushButton(tr("Statistics"));
+        _widgets.push_back(_userStatisticsButton);
+        _userDictionariesButton = new QPushButton(tr("Dictionaries"));
+        _widgets.push_back(_userDictionariesButton);
+        _userTestsButton = new QPushButton(tr("Tests"));
+        _widgets.push_back(_userTestsButton);
+        _userSettingsButton = new QPushButton(tr("Settings"));
+        _widgets.push_back(_userSettingsButton);
+}
+
+void
+userMenu::setConnections()
+{
+        connect(_userStatisticsButton, SIGNAL(clicked()), this, SLOT(showStatistics()));
+        connect(_userDictionariesButton, SIGNAL(clicked()), this, SLOT(showDictionaryList()));
+        connect(_userTestsButton, SIGNAL(clicked()), this, SLOT(showTests()));
+        connect(_userSettingsButton, SIGNAL(clicked()), this, SLOT(showSettings()));
+}
+
+void
+userMenu::setMenuLayout(QLabel *label, QVBoxLayout *&menuLayout)
+{
+        menuLayout->addWidget(label, 0, 0);
+        menuLayout->addWidget(_userStatisticsButton, 1, 0);
+        menuLayout->addWidget(_userDictionariesButton, 2, 0);
+        menuLayout->addWidget(_userTestsButton, 3, 0);
+        menuLayout->addWidget(_userSettingsButton, 4, 0);
+        menuLayout->addItem(_spacer);
+}
+
+void
+userMenu::showTests()
+{
+        showHideWidget<QTableWidget>(_userTests, _userTestsButton);
+}
+
+void
+userMenu::showDictionaryList()
+{
+        showHideWidget<QTableWidget>(_userDicts, _userDictionariesButton);
+}
+
+void
+userMenu::showStatistics()
+{
+        showHideWidget<QWidget>(_userStats, _userStatisticsButton);
+}
+
+void
+userMenu::showSettings()
+{
+        showHideWidget<QWidget>(_userSetts, _userSettingsButton);
+}
+
+/*
 void
 userMenu::showDictionaryList()
 {
@@ -176,10 +215,9 @@ userMenu::showTests()
         }
         _visibleWidget = 0;
         _spacer->changeSize(5, 250);
-}
+}*/
 
-
-void
+/*void
 userMenu::showSettings()
 {
         if (0 != _visibleWidget) {
@@ -220,7 +258,7 @@ userMenu::showStatistics()
         }
         _visibleWidget = 0;
         _spacer->changeSize(5, 250);
-}
+}*/
 
 } // end of namespace gui
 
