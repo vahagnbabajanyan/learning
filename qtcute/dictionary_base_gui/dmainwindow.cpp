@@ -22,7 +22,7 @@ dMainWindow::dMainWindow()
 {
         connect(_loginUser, SIGNAL(loggedIn(const std::string&)), this, SLOT(logUser(const std::string&)));
         QWidget* centralWidget = new QWidget;
-        centralWidget->setFixedSize(250, 300);
+        centralWidget->setFixedSize(720, 450);
         setCentralWidget(centralWidget);
         createActions();
         createMenus();
@@ -138,7 +138,10 @@ void dMainWindow::logUser(const std::string& user)
         QHBoxLayout* mainLayout = new QHBoxLayout;
         mainLayout->addLayout(leftLayout);
         QTableWidget *table = new QTableWidget;
+        table->setFixedSize(560, 400);
+        QSpacerItem* spacer = new QSpacerItem(5, 20);
         QVBoxLayout* rightLayout = new QVBoxLayout;
+        rightLayout->addItem(spacer);
         rightLayout->addWidget(table);
         mainLayout->addLayout(rightLayout);
         centralWidget()->layout()->removeWidget(_loginUser);

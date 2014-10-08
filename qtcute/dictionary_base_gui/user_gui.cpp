@@ -30,7 +30,12 @@ loginUser::loginUser(QWidget* w)
         formGridLayout->addWidget( _userPassLine, 1, 1 );
         formGridLayout->addWidget( _okButton, 2, 1 );
         formGridLayout->addWidget( _newUserButton, 3, 1 );
-        setLayout(formGridLayout);
+        QWidget* centralLoginWidget = new QWidget;
+        centralLoginWidget->setFixedSize(250, 200);
+        centralLoginWidget->setLayout(formGridLayout);
+        QHBoxLayout* mainLayout = new QHBoxLayout;
+        mainLayout->addWidget(centralLoginWidget);
+        setLayout(mainLayout);
 }
 
 userInfo
@@ -85,6 +90,7 @@ loginUser::submitOkButton()
 void
 loginUser::login()
 {
+        emit loggedIn("Vahagn");
         // emit sugnal
         // load user information
         // create dictionary
@@ -105,7 +111,7 @@ userMenu::userMenu(const std::string& user, QWidget* w)
 {
         createButtons();
         setConnections();
-        _spacer = new QSpacerItem(5, 250);
+        _spacer = new QSpacerItem(5, 240);
         QVBoxLayout *menuLayout = new QVBoxLayout;
         QLabel *userLabel = new QLabel(tr(user.c_str()));
         setMenuLayout(userLabel, menuLayout);
@@ -171,7 +177,7 @@ userMenu::showStatistics()
 void
 userMenu::showSettings()
 {
-        showHideWidget<QWidget>(_userSetts, _userSettingsButton);
+        showHideWidget<QTableWidget>(_userSetts, _userSettingsButton);
 }
 
 /*

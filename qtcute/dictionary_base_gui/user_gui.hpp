@@ -70,16 +70,16 @@ private:
                 }
                 if (0 == _visibleWidget || w != _visibleWidget) {
                         w = new W;
-                        w->setFixedSize(100, 180);
+                        w->setFixedSize(105, 140);
                         std::list<QWidget*>::iterator it = std::find(_widgets.begin(), _widgets.end(), button);
                         int indx = std::distance(_widgets.begin(), it) + 2;
                         static_cast<QHBoxLayout*>(_mainWidget->layout())->insertWidget(indx, w);
                         _visibleWidget = w;
-                        _spacer->changeSize(5, 50);
+                        _spacer->changeSize(5, 88);
                         return;
                 }
                 _visibleWidget = 0;
-                _spacer->changeSize(5, 250);
+                _spacer->changeSize(5, 240);
         }
 
 private:
@@ -93,7 +93,7 @@ private:
         QWidget *_userStats;
         QTableWidget *_userDicts;
         QTableWidget *_userTests;
-        QWidget *_userSetts;
+        QTableWidget *_userSetts;
 
         QWidget *_visibleWidget;
 
