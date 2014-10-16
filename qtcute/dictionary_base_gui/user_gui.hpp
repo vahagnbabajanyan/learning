@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "user.hpp"
+#include "user_settings.hpp"
 
 class QLabel;
 class QLineEdit;
@@ -45,6 +46,23 @@ private:
         QPushButton* _newUserButton;
 };
 
+class extendableMenu : public QWidget
+{
+Q_OBJECT
+public:
+        enum Type
+        {
+                DICT = 0,
+                TEST = 1,
+                STAT = 2,
+                SETT = 3
+        };
+public:
+        extendableMenu(const userSettings* setts);
+private:
+        std::list<QPushButton*> _buttons;
+};
+
 class userMenu : public QWidget
 {
         Q_OBJECT;
@@ -70,7 +88,7 @@ private:
                 }
                 if (0 == _visibleWidget || w != _visibleWidget) {
                         w = new W;
-                        w->setFixedSize(105, 140);
+                        w->setFixedSize(145, 140);
                         std::list<QWidget*>::iterator it = std::find(_widgets.begin(), _widgets.end(), button);
                         int indx = std::distance(_widgets.begin(), it) + 2;
                         static_cast<QHBoxLayout*>(_mainWidget->layout())->insertWidget(indx, w);

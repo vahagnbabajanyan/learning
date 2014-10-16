@@ -104,6 +104,17 @@ loginUser::createNewUser()
         std::cout << "createNewUser" << std::endl;
 }
 
+
+// Implementation of class extendableMenu
+extendableMenu::extendableMenu(const userSettings* setts, Type t)
+{
+
+}
+
+
+
+
+
 // Implementation of class userMenu
 
 userMenu::userMenu(const std::string& user, QWidget* w)
@@ -116,7 +127,7 @@ userMenu::userMenu(const std::string& user, QWidget* w)
         QLabel *userLabel = new QLabel(tr(user.c_str()));
         setMenuLayout(userLabel, menuLayout);
         _mainWidget = new QWidget;
-        _mainWidget->setFixedSize(110, 400);
+        _mainWidget->setFixedSize(130, 400);
         _mainWidget->setLayout(menuLayout);
         QHBoxLayout *mainLayout = new QHBoxLayout;
         mainLayout->addWidget(_mainWidget);
@@ -180,91 +191,4 @@ userMenu::showSettings()
         showHideWidget<QTableWidget>(_userSetts, _userSettingsButton);
 }
 
-/*
-void
-userMenu::showDictionaryList()
-{
-        if (0 != _visibleWidget) {
-                _visibleWidget->hide();
-                _mainWidget->layout()->removeWidget(_visibleWidget);
-        }
-        if (0 == _visibleWidget || _userDicts != _visibleWidget) {
-                _userDicts = new QTableWidget;
-                _userDicts->setFixedSize(100, 180);
-                std::list<QWidget*>::iterator it = std::find(_widgets.begin(), _widgets.end(), _userDictionariesButton);
-                int indx = std::distance(_widgets.begin(), it) + 2;
-                static_cast<QHBoxLayout*>(_mainWidget->layout())->insertWidget(indx, _userDicts);
-                _visibleWidget = _userDicts;
-                _spacer->changeSize(5, 50);
-                return;
-        }
-        _visibleWidget = 0;
-        _spacer->changeSize(5, 250);
-}
-
-void
-userMenu::showTests()
-{
-        if (0 != _visibleWidget) {
-                _visibleWidget->hide();
-                _mainWidget->layout()->removeWidget(_visibleWidget);
-        }
-        if (0 == _visibleWidget || _userTests != _visibleWidget) {
-                _userTests = new QTableWidget;
-                _userTests->setFixedSize(100, 180);
-                std::list<QWidget*>::iterator it = std::find(_widgets.begin(), _widgets.end(), _userTestsButton);
-                int indx = std::distance(_widgets.begin(), it) + 2;
-                static_cast<QHBoxLayout*>(_mainWidget->layout())->insertWidget(indx, _userTests);
-                _visibleWidget = _userTests;
-                _spacer->changeSize(5, 50);
-                return;
-        }
-        _visibleWidget = 0;
-        _spacer->changeSize(5, 250);
-}*/
-
-/*void
-userMenu::showSettings()
-{
-        if (0 != _visibleWidget) {
-                _visibleWidget->hide();
-                _mainWidget->layout()->removeWidget(_visibleWidget);
-        }
-        if (0 == _visibleWidget || _userSetts != _visibleWidget) {
-                _userSetts = new QTableWidget;
-                _userSetts->setFixedSize(100, 180);
-                std::list<QWidget*>::iterator it = std::find(_widgets.begin(), _widgets.end(), _userSettingsButton);
-                int indx = std::distance(_widgets.begin(), it) + 2;
-                static_cast<QHBoxLayout*>(_mainWidget->layout())->insertWidget(indx, _userSetts);
-                _visibleWidget = _userSetts;
-                _spacer->changeSize(5, 50);
-                return;
-        }
-        _visibleWidget = 0;
-        _spacer->changeSize(5, 250);
-
-}
-
-void
-userMenu::showStatistics()
-{
-        if (0 != _visibleWidget) {
-                _visibleWidget->hide();
-                _mainWidget->layout()->removeWidget(_visibleWidget);
-        }
-        if (0 == _visibleWidget || _userStats != _visibleWidget) {
-                _userStats = new QTableWidget;
-                _userStats->setFixedSize(100, 180);
-                std::list<QWidget*>::iterator it = std::find(_widgets.begin(), _widgets.end(), _userStatisticsButton);
-                int indx = std::distance(_widgets.begin(), it) + 2;
-                static_cast<QHBoxLayout*>(_mainWidget->layout())->insertWidget(indx, _userStats);
-                _visibleWidget = _userStats;
-                _spacer->changeSize(5, 50);
-                return;
-        }
-        _visibleWidget = 0;
-        _spacer->changeSize(5, 250);
-}*/
-
 } // end of namespace gui
-

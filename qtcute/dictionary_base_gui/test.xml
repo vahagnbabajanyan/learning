@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root_dictionary_application>
+        <appconfig>
+                <url>http://www.google.com</url>
+                <window_sizes></window_sizes>
+        </appconfig>
+        <users>
+                <user ID="15" name="Mark">
+                        <dictionaries>
+                                <dictionary path="$GLOBALDICT/">Harry Potter ch_1</dictionary>
+                                <dictionary path="styledemo">Fight Club</dictionary>
+                        </dictionaries>
+                        <tests>
+                                <test>test_path</test>
+                        </tests>
+                        <statistics>statistics_path</statistics>
+                        <settings>
+                                <level>Advanced</level>
+                        </settings>
+                        <password></password>
+                </user>
+        </users>
+</root_dictionary_application>
