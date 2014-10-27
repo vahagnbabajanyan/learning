@@ -13,11 +13,11 @@ class sqlEngine
 {
 public:
         sqlEngine(const QString &dbName,
-                  const QSrting &hostName,
+                  const QString &hostName,
                   const QString &userName,
                   const QString &password);
 
-        void createConnection();
+        void createConnection(const QString&);
 
         bool createDataBase(const QString &dbName);
         bool createTable(const QString &tblName);
@@ -26,12 +26,11 @@ public:
                         const QString &cellName, const QString &value);
         QString getCell(const QString &tblName, const QString &uniqueKey,
                         const QString &cellName);
-        wordUnit getRow(const QString &const QString &tblName,
-                        const QString &uniqueKey);
+        wordUnit getRow(const QString &tblName, const QString &uniqueKey);
         bool removeRow(const QString &tblName, const QString &uniqueKey);
         bool removeTbl(const QString &tblName);
 private:
-        void createDatabaseIfNotExist(cons QString &dbName);
+        void createDatabaseIfNotExist(const QString &dbName);
 
 private:
         QSqlDatabase m_database;
