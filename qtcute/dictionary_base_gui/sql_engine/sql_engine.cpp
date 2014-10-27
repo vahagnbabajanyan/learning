@@ -1,72 +1,79 @@
-#include <string>
-#include <vector>
-#include <iostream>
+#include "sql_engine.hpp"
+#include "prepare_query.hpp"
 
-#include <QSql>
-#include <QDebug>
+#include <QString>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
-#include "sql_engline.hpp"
-
-
-namespace sql_engine
+namespace sql
 {
-
-sql_connector::sql_connector(const std::string db_name,
-              const std::string& host,
-              const std::string& user,
-              const std::string& pass)
-    : m_database(QSqlDatabase::addDatabase("QMYSQL"))
+sqlEngine::sqlEngine(const QString& dbName,
+                     const QString& hostName,
+                     const QString& userName,
+                     const QString& password)
+        : m_database(QSqlDatabase::addDatabase("QMYSQL")
 {
-    if (!host.empty()) {
-        m_database.setHostName(host.c_str());
-    }
-    m_database.setDatabaseName(db_name.c_str());
-    m_database.setUserName(user.c_str());
-    if (!pass.empty()) {
-        m_database.setPassword(pass.c_str());
-    }
+        if (!hostName.isEmpty()) {
+                m_database.setHostName(hostName);
+        }
+        m_database.setUserName(userName);
+        if (!password.isEmpty()) {
+                m_database.serPassword(password);
+        }
+        createConnection(dbName);
 }
 
-void sql_connector::create_connection()
+void sqlEngine::createConnection(const QString& dbName)
 {
-    if (!m_database.open()) {
-        std::cout << "Can't Open Database" << std::endl;
-    }
+        if (m_database.open()) {
+                createDatabaseIfNotExist(dbName);
+        }
 }
 
-void sql_connector::create_table(const std::string& table)
+void createDatabaseIfNotExist(const QString& dbName)
 {
-    if (m_database.tables().contains(table.c_str())) {
-        std::cout << "table exists, no need to create" << std::endl;
-        return;
-    }
-    std::string tbl_create = std::string("create table " +
-            table +
-            " (word varchar(20) unique primary key, "
-            "translated varchar(80), "
-            "phrases varchar(80), "
-            "sentence varchar(80))");
-    std::cout << tbl_create << std::endl;
-    QSqlQuery qry;
-    if (!qry.exec(tbl_create.c_str())) {
-        qDebug()<< "ERROR: " << QSqlError(m_database.lastError()).text();
-        std::cout << "cant create table" << std::endl;
-    }
+        QString check = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA."
+                "SCHEMATA WHERE SCHEMA_NAME = '" + dbName + "'";
+        QSqlQuery checkQuery = m_database.exec(check);
+        if (0 == checkQuery.size()) {
+                m_database.exec("CREATE DATABASE IF NOT EXISTS" +
+                                 dbName + ";");
+        }
+        m_database.setDatabaseName(dbName);
 }
 
-/*
-void sql_connector::get_from_database(const std::string& table,
-                       word_unit& unit);
+bool sqlEngine::createTable(const QString &tblName)
+{
+        QSqlQuery q(m_database);
+        if (!q.exec(queryMsg::createTbl(tblName))) {
+                std::cout << "ERROR: " << qPrintable(QSqlError(m_database.lastError()).text()) << std::endl;
+        }
+}
 
-void sql_connector::delete_from_database(const std::string& table,
-                          const word_unit& unit);
-                          */
-/*
-void modify_unit(const std::string& key,
-                 const std::string& tbl_name,
-                 const std::string& field,
-                 const std::string& input)
-{}
-*/
+bool insertRow(const QString &tblName, const wordUnit &wu)
+{
+        QSqlQuery q;
+        q.prepare(QString("insert " + table + " (word, translated, phrases, sentence) values(:word, :translated, :phrases, :sentence)"));
+        q.bindValue(":word", wu._key);
+        q.bindValue(":translated", wu._translations);
+        q.bindValue(":phrases", wu._phrases);
+        q.bindValue(":sentence", wu._sentence);
+        if (q.exec()) {
+                std::cout << "Cant exec command" << std::endl;
+        }
 
-} // end of namespace  sql_engine
+}
+
+bool insertCell(const QString &tblName, const QString &uniqueKey,
+                const QString &cellName, const QString &value)
+{
+
+}
+QString getCell(const QString &tblName, const QString &uniqueKey,
+                const QString &cellName);
+wordUnit getRow(const QString &const QString &tblName,
+                const QString &uniqueKey);
+bool removeRow(const QString &tblName, const QString &uniqueKey);
+bool removeTbl(const QString &tblName);
+
+} // end of namespace sql

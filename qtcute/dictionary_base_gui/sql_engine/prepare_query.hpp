@@ -6,7 +6,7 @@
 namespace slq
 {
 
-class prepareMsg
+class qeuryMsg
 {
 public:
         /// @brief generates command for creating database with given name if not exist
@@ -18,7 +18,7 @@ public:
         static QString removeTbl(const QString& tblName);
 
         /// @brief generates command for inserting translations in given table
-        static QString prepareTranslations(const QStringList nouns&,
+        static QString translations(const QStringList nouns&,
                         const QStringList verbs&);
 
         /// @brief generates command for inseting phrases in given table
@@ -26,7 +26,7 @@ public:
 
         /// @brief generates command for inserting cell
         static QString insertCell(const QString& tblName, const QString& key,
-                        const QString& cell);
+                        const QString& cell, const QString& value);
 
         /// @brief generates command for removing row with given key from given table
         static QString removeRow(const QString& tblName,
