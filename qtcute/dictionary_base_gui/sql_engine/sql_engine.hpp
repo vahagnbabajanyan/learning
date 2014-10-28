@@ -29,6 +29,12 @@ public:
         wordUnit getRow(const QString &tblName, const QString &uniqueKey);
         bool removeRow(const QString &tblName, const QString &uniqueKey);
         bool removeTbl(const QString &tblName);
+        QStringList getTables();
+
+        bool isOpen()
+        {
+                return m_database.isOpen();
+        }
 private:
         void createDatabaseIfNotExist(const QString &dbName);
 

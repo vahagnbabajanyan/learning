@@ -38,6 +38,8 @@ public:
         static QString getCell(const QString& tblName, const QString& key,
                         const QString& cell);
 
+        static QString getTables();
+
 };
 
 } // end of namespace sql

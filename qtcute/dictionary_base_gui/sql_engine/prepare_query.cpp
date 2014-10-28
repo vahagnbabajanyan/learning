@@ -15,8 +15,8 @@ QString queryMsg::createDb(const QString& dbName)
 
 QString queryMsg::createTbl(const QString& tblName)
 {
-        QString qryStr = QString("create table ") + tblName +
-                QString(" (key_word varchar(40), translations varchar(200), phrases varchar(200), sentence varchar(200))");
+        QString qryStr = QString("create table if not exists ") + tblName +
+                QString(" (word varchar(40), translations varchar(200), phrases varchar(200), sentence varchar(200))");
         return qryStr;
 }
 
@@ -84,6 +84,12 @@ QString queryMsg::getCell(const QString& tblName, const QString& key,
                 const QString& cell)
 {
         QString qryStr = "select " + cell + " from " + tblName + "where word = '" + key + "';";
+        return qryStr;
+}
+
+QString queryMsg::getTables()
+{
+        QString qryStr = "show tables;";
         return qryStr;
 }
 
