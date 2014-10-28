@@ -17,7 +17,6 @@ sqlEngine::sqlEngine(const QString& dbName,
                      const QString& password)
         : m_database(QSqlDatabase::addDatabase("QMYSQL"))
 {
-        std::cout << "ctor of sqlEngine" << std::endl;
         if (!hostName.isEmpty()) {
                 m_database.setHostName(hostName);
         }
@@ -26,30 +25,41 @@ sqlEngine::sqlEngine(const QString& dbName,
                 m_database.setPassword(password);
         }
         m_database.setDatabaseName(dbName);
-        createConnection(dbName);
-}
-
-void sqlEngine::createConnection(const QString& dbName)
-{
-        std::cout << "creating connection" << std::endl;
-        if (m_database.open()) {
-                createDatabaseIfNotExist(dbName);
+        if (!m_database.open()) {
+                qDebug() << m_database.lastError().text();
+                createDatabaseIfNotExist(dbName, hostName, userName, password);
+                if (!m_database.open()) {
+                        //thow exception
+                }
         }
 }
 
-void sqlEngine::createDatabaseIfNotExist(const QString& dbName)
+void sqlEngine::createDatabaseIfNotExist(const QString& dbName,
+                     const QString& hostName,
+                     const QString& userName,
+                     const QString& password)
 {
-        std::cout << "creating database if not exist" << std::endl;
+        std::cout << "WTF" << std::endl;
+        QSqlDatabase db(QSqlDatabase::addDatabase("QMYSQL", "create"));
+        if (!hostName.isEmpty()) {
+                db.setHostName(hostName);
+        }
+        db.setUserName(userName);
+        if (!password.isEmpty()) {
+                db.setPassword(password);
+        }
+        if (!db.open()) {
+                //throw exception
+                return;
+        }
         QString check = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA."
                 "SCHEMATA WHERE SCHEMA_NAME = '" + dbName + "'";
-        QSqlQuery checkQuery = m_database.exec(check);
+        QSqlQuery checkQuery = db.exec(check);
         if (0 == checkQuery.size()) {
-                std::cout << "query size is NULL , creating database" << std::endl;
-                m_database.exec("CREATE DATABASE IF NOT EXISTS " + dbName + ";");
-                qDebug() << m_database.lastError().text();
-        } else {
-                std::cout << "found DB" << std::endl;
+                db.exec("CREATE DATABASE IF NOT EXISTS " + dbName + ";");
+                qDebug() << db.lastError().text();
         }
+        db.close();
 }
 
 bool sqlEngine::createTable(const QString &tblName)
