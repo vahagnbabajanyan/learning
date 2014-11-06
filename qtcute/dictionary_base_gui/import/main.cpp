@@ -10,10 +10,6 @@ int main(int argc, char *argv[])
 
         importer imp;
         imp.show();
-        qDebug() << "main thread : " << QThread::currentThreadId();
-        myThread t;
-        QObject::connect(&t, SIGNAL(), &app, SLOT(quit()));
-        t.start();
 
         app.exec();
 }

@@ -1,5 +1,6 @@
 #include "importer.hpp"
 #include "reader/reader.hpp"
+#include "my_thread.hpp"
 
 #include <QWidget>
 #include <QLayout>
@@ -10,16 +11,28 @@
 importer::importer(QWidget* owner)
         : QWidget(owner)
 {
-        _loading = new QWidget;
         QFileDialog *fd = new QFileDialog(this);
         fd->setNameFilter("Text Files (*.txt)");
         fd->show();
         if (fd->exec()) {
                 QString fileName = fd->selectedFiles().front();
-                qDebug() << fileName;
+                _tableName = fileName;
+                _th = new myThread(fileName, _tableName);
+                connect(_th, SIGNAL(finished()), this, SLOT(drawTable()), Qt::DirectConnection);
+                connect(_th, SIGNAL(started()), this, SLOT(drawLoading()), Qt::DirectConnection);
+                _th->start();
         }
+}
 
-        _loading->setFixedSize(250, 200);
+void importer::drawLoading()
+{
+        QWidget *loading = new QWidget;
+        loading->setFixedSize(250, 200);
         QHBoxLayout* mainLayout = new QHBoxLayout;
-        mainLayout->addWidget(_loading);
+        mainLayout->addWidget(loading);
+}
+
+void importer::drawTable()
+{
+        qDebug() << "drawing table in thread " << QThread::currentThreadId();
 }

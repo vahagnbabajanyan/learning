@@ -6,8 +6,13 @@
 
 class myThread : public QThread
 {
+public:
+        myThread(const QString&, const QString&);
 private:
         void run();
+private:
+        QString _fileName;
+        QString _tableName;
 };
 
 #endif
