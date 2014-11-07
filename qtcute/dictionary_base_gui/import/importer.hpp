@@ -2,6 +2,7 @@
 #define _IMPORTER_HPP_
 
 #include <QWidget>
+#include "my_thread.hpp"
 
 class importer : public QWidget
 {
@@ -9,8 +10,13 @@ class importer : public QWidget
 public:
         importer(QWidget* owner = 0);
 
+private slots:
+        void drawTable();
+        void drawLoading();
+
 private:
-        QWidget* _loading;
+        QString _tableName;
+        myThread *_th;
 };
 
 #endif
