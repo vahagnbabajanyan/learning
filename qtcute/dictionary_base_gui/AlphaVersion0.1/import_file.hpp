@@ -17,7 +17,6 @@ public:
 signals:
         void fileSelected(const QString&);
         void okPressed(const QString& fileName, const QString& tableName);
-        void foo();
 public slots:
         void openFileOpenDialog();
         void tableNameValidityCheck(const QString&);

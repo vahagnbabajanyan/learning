@@ -7,6 +7,7 @@
 #include <string>
 
 #include "user_gui.hpp"
+#include "import_file.hpp"
 // #include "dictionay_window.hpp" instead used below QDialog
 
 class QAction;
@@ -41,6 +42,10 @@ private slots:
         void openInsertDialog();
         void logUser(const std::string& user);
 
+        void startImportingSlot(const QString&, const QString&);
+signals:
+        void startImportingSignal(const QString&, const QString&);
+
 private:
         void createActions();
         QAction* createAction(const std::string&, QKeySequence, const std::string&);
@@ -52,7 +57,7 @@ private:
         loginUser *_loginUser;
         userMenu *_userMenu;
         QDialog *_exportDialog;
-        QDialog *_importDialog;
+        importFileDialog *_importDialog;
         QDialog *_mergeDialog;
         QDialog *_insertDialog;
         QDialog *_recentFilesDialog;

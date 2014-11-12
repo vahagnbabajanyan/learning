@@ -4,6 +4,9 @@
 #include <QObject>
 #include <QString>
 
+namespace core
+{
+
 // importer object to be used when user will choose file to import
 // object will be created wnd moved in new thread
 class importer : public QObject
@@ -25,5 +28,7 @@ private:
         QString _tblName;
 
 };
+
+} // end of namespace core
 
 #endif

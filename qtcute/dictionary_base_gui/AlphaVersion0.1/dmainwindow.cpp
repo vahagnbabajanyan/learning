@@ -13,6 +13,7 @@
 #include "dmainwindow.hpp"
 #include "user_gui.hpp"
 #include "user.hpp"
+#include "import_file.hpp"
 
 namespace gui
 {
@@ -116,7 +117,10 @@ bool dMainWindow::saveAsFile()
         return false;
 }
 void dMainWindow::openImportDialog()
-{}
+{
+        _importDialog = new importFileDialog;
+        connect(_importDialog, SIGNAL(okPressed(const QString&, const QString&)), this, SLOT(startImportingSlot(const QString&, const QString&)));
+}
 void dMainWindow::openExportDialog()
 {}
 void dMainWindow::openRecentFile()
@@ -149,6 +153,12 @@ void dMainWindow::logUser(const std::string& user)
         delete centralWidget()->layout();
         update();
         centralWidget()->setLayout(mainLayout);
+}
+
+void dMainWindow::startImportingSlot(const QString& fileName, const QString& tableName)
+{
+        std::cout << "startImportingSlot" << std::endl;
+        emit startImportingSlot(fileName, tableName);
 }
 
 } // end of namespace gui
