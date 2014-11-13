@@ -10,6 +10,10 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QThread>
+#include <QTimer>
+
+#include <unistd.h>
 
 #include <iostream>
 
@@ -23,6 +27,15 @@ importer::importer(const QString& fileName, const QString& tblName)
 void importer::import()
 {
         std::cout << __func__ << std::endl;
+        reader r(_fileName);
+        std::pair<bool, QString> p = r.getNext();
+        unsigned int uno_secundo = 1000000;
+        while (p.first) {
+                QString word = p.second;
+                qDebug() << QThread::currentThreadId() << "  " << word;
+                p = r.getNext();
+                usleep(60 * uno_secundo);
+        }
         // create reader object : reader.hpp
         // read all words till end of file : reader.hpp
         // connect google.translate every 2 minutes : connector.hpp
