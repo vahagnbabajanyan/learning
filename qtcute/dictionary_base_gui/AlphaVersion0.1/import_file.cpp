@@ -71,6 +71,7 @@ void importFileDialog::inputFileSelected(const QString& fileName)
 
 void importFileDialog::pressed()
 {
+        std::cout << __func__ << std::endl;
         emit okPressed(_fileName, _tableName);
 }
 

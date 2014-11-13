@@ -14,15 +14,11 @@ class importer : public QObject
         Q_OBJECT;
 public:
         importer(const QString& fileName, const QString& tblName);
-        void import()
-        {
-                // create reader object : reader.hpp
-                // read all words till end of file : reader.hpp
-                // connect google.translate every 2 minutes : connector.hpp
-                // parse answer as much as possible : json_parse.hpp
-                // save answer in txt file : serializeTxt TODO to implement
-                // imsert parsed version in mysql DB : sql_engine.hpp
-        }
+
+public slots:
+        void import();
+signals:
+        void finishedImporting();
 private:
         QString _fileName;
         QString _tblName;

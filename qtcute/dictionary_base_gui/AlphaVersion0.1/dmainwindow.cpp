@@ -118,8 +118,12 @@ bool dMainWindow::saveAsFile()
 }
 void dMainWindow::openImportDialog()
 {
+        std::cout << __func__ << std::endl;
         _importDialog = new importFileDialog;
+        _importDialog->show();
         connect(_importDialog, SIGNAL(okPressed(const QString&, const QString&)), this, SLOT(startImportingSlot(const QString&, const QString&)));
+        connect(_importDialog, SIGNAL(okPressed(const QString&, const QString&)), _importDialog, SLOT(hide()));
+        connect(_importDialog, SIGNAL(okPressed(const QString&, const QString&)), _importDialog, SLOT(deleteLater()));
 }
 void dMainWindow::openExportDialog()
 {}
@@ -158,7 +162,7 @@ void dMainWindow::logUser(const std::string& user)
 void dMainWindow::startImportingSlot(const QString& fileName, const QString& tableName)
 {
         std::cout << "startImportingSlot" << std::endl;
-        emit startImportingSlot(fileName, tableName);
+        emit startImportingSignal(fileName, tableName);
 }
 
 } // end of namespace gui
