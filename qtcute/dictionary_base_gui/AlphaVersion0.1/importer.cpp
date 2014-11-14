@@ -17,6 +17,9 @@
 
 #include <iostream>
 
+#include "connector.hpp"
+#include "json_reader.hpp"
+
 namespace core
 {
 
@@ -32,7 +35,10 @@ void importer::import()
         unsigned int uno_secundo = 1000000;
         while (p.first) {
                 QString word = p.second;
-                qDebug() << QThread::currentThreadId() << "  " << word;
+                qDebug() << QThread::currentThreadId() << "  translating word" << word;
+                static QString url = "http://translate.google.com/translate_a/t?";
+                net::connector c(url);
+                c.translate(word.toUtf8().constData());
                 p = r.getNext();
                 usleep(60 * uno_secundo);
         }

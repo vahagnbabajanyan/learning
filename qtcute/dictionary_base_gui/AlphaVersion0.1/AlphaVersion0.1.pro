@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET = exe
 
-QT += core gui widgets sql xml
+QT += core gui widgets sql xml network
 
 INCLUDEPATH += .
 
@@ -18,7 +18,10 @@ HEADERS += app_settings.hpp \
            user.hpp \
            user_gui.hpp \
            user_settings.hpp \
-           xml_reader.hpp
+           xml_reader.hpp \
+           core_manager.hpp \
+           json_reader.hpp \
+           connector.hpp
 SOURCES += dmainwindow.cpp \
            import_file.cpp \
            importer.cpp \
@@ -26,4 +29,7 @@ SOURCES += dmainwindow.cpp \
            reader.cpp \
            user_gui.cpp \
            user_settings.cpp \
-           xml_reader.cpp
+           xml_reader.cpp \
+           core_manager.cpp \
+           json_reader.cpp \
+           connector.cpp
