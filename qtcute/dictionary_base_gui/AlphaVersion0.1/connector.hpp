@@ -18,8 +18,9 @@ class connector : public QObject
         Q_OBJECT
 public:
         connector(const QString& url);
-        void translate(const std::string&);
+        QString translate(const std::string&);
 public slots:
+        void slotReadyRead();
         void readData(QNetworkReply* reply);
         void slotError(QNetworkReply::NetworkError);
         void slotSslErrors(QList<QSslError>);

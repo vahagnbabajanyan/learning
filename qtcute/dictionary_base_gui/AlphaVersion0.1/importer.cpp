@@ -36,9 +36,10 @@ void importer::import()
         while (p.first) {
                 QString word = p.second;
                 qDebug() << QThread::currentThreadId() << "  translating word" << word;
-                static QString url = "http://translate.google.com/translate_a/t?";
+                QString url = "http://translate.google.com/translate_a/t?";
                 net::connector c(url);
-                c.translate(word.toUtf8().constData());
+                QString response = c.translate(word.toUtf8().constData());
+                qDebug() << response;
                 p = r.getNext();
                 usleep(60 * uno_secundo);
         }
