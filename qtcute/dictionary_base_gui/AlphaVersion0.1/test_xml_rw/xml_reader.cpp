@@ -302,6 +302,12 @@ void xmlRW::addDictionaries(const QDomElement& root, const std::list<std::string
         }
 }
 
+void xmlRW::addDictionary(const std::string& user, const std::string& dictionary)
+{
+        QDomElement root = getRoot();
+        QDomNode n = findTagByPath(root, "users");
+}
+
 /*void xmlRW::addTagToRoot(const QDomElement& root, const std::string& childName,
                 const std::string& tagName, std::map<std::string, std::string>& attrs)
 {

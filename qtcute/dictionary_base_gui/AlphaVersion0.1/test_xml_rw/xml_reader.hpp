@@ -33,6 +33,7 @@ public:
         bool addUser(const userSettings& usets);
         QDomElement addBlankUser(const std::string& user);
         void addDictionaries(const QDomElement&, const std::list<std::string>&);
+        void addDictionary(const std::string& user, const std::string& dictionary);
 
         QDomElement getRoot()
         {
