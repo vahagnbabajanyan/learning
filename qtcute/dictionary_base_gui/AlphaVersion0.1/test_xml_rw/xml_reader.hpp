@@ -8,6 +8,7 @@
 
 #include <list>
 #include <string>
+#include <map>
 
 #include "user_settings.hpp"
 #include "app_settings.hpp"
@@ -17,6 +18,8 @@ namespace settings
 
 class xmlRW
 {
+public:
+        typedef std::map<std::string, std::string> atributes;
 public:
         static xmlRW& instance()
         {
@@ -28,23 +31,29 @@ public:
         bool getUserSettings(const std::string& user, userSettings& usets);
 
         bool addUser(const userSettings& usets);
-        QDomElement addUser(const std::string& user);
+        QDomElement addBlankUser(const std::string& user);
+        void addDictionaries(const QDomElement&, const std::list<std::string>&);
+
+        QDomElement getRoot()
+        {
+                return _dom->documentElement();
+        }
+        QDomNode findTagByPath(const QDomElement&, const std::string&, const atributes& = atributes()) const;
 private:
         xmlRW();
         xmlRW(const xmlRW&);
         xmlRW& operator=(const xmlRW&);
 private:
-        void addBlankElement(QDomNode, const std::string&);
+        static std::string getNextTagName(std::string&);
+        QDomElement addBlankElement(QDomNode, const std::string&);
         bool prepareUser(const std::string& user);
-
+        QDomNode findTagByName(const QDomElement&, const std::string&, const atributes& = atributes()) const;
         bool initUserSettings(const QDomElement &element, userSettings &usets);
         bool initUserDictionaries(const QDomElement &element, userSettings &usets);
         bool initUserTests(const QDomElement &element, userSettings &usets);
         bool initUserLevel(const QDomElement &element, userSettings &usets);
         bool initUserStatistics(const QDomElement &element, userSettings &usets);
-
         bool initAppSettings(const QDomElement &element, appSettings &asets);
-
         bool serializeDomDocumentChanges();
 private:
         QString _fileName;

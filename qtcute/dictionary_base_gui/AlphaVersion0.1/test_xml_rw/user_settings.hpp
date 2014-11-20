@@ -15,6 +15,7 @@ public:
 
 struct userSettings
 {
+        typedef std::list<std::string> strings;
         enum Level
         {
                 beginer = 0,

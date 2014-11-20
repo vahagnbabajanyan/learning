@@ -6,7 +6,9 @@ namespace settings
 {
 
 userSettings::userSettings(const std::string& userName)
-        : _user(userName),
+        : _dictionaries() ,
+          _tests() ,
+          _user(userName),
           _password(),
           _level(invalid),
           _stats()
