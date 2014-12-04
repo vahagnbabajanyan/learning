@@ -260,7 +260,10 @@ QDomNode xmlRW::findTagByPath(const QDomElement& root, const std::string& path, 
                 return findTagByName(root, tagName);
         } else {
                 QDomNode nextRoot = findTagByName(root, tagName);
-                return findTagByPath(nextRoot.toElement(), npath, attrs);
+                if (!nextRoot.isNull()) {
+                        findTagWithSpecifiedAttributes();
+                        return findTagByPath(nextRoot.toElement(), npath, attrs);
+                }
         }
         // throw exception
         return QDomNode();
